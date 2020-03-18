@@ -102,11 +102,9 @@ namespace ProjetoEstagio
                                 {
                                     Console.WriteLine("Opcao invalida.");
                                 }
-
                             }
                         }
                     }
-
                 }
             }
             catch (Exception e)
