@@ -21,7 +21,6 @@ namespace ProjetoEstagio
                         diretorio = Console.ReadLine();
                         if (Directory.Exists(diretorio))
                         {
-                            //Console.WriteLine("diretorio existe");
                             break;
                         }
                         else
@@ -29,6 +28,8 @@ namespace ProjetoEstagio
                             Console.WriteLine("Diretorio nao existe");
                             while (true)
                             {
+
+
                                 Console.WriteLine("Deseja pesquisar outro diretorio? 1 ( Sim ) / 2 ( Nao )");
                                 var decisao = int.Parse(Console.ReadLine());
                                 if (decisao == 2)
@@ -46,57 +47,34 @@ namespace ProjetoEstagio
                                 }
                             }
                         }
+                    }
 
+                    while (true)
+                    {
                         Console.WriteLine("Digite o nome do arquivo: ");
                         var arqQualquer = Console.ReadLine();
                         var arqCompleto = Path.Combine(diretorio, arqQualquer);
-                        lerArq = File.ReadAllText(arqCompleto);
-
-                        while (true)
+                        if (File.Exists(arqCompleto))
                         {
-                            if (File.Exists(arqCompleto))
-                            {
-                                Console.WriteLine($"\n{lerArq}\n");
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Arquivo nao existe.");
-                                while (true)
-                                {
-                                    Console.WriteLine("Deseja pesquisar outro arquivo? 1 ( Sim ) / 2 ( Nao )");
-                                    var decisao = int.Parse(Console.ReadLine());
-                                    if (decisao == 2)
-                                    {
-                                        Console.WriteLine("O programa foi encerrado...");
-                                        return;
-                                    }
-                                    if (decisao == 1)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Opcao invalida.");
-                                    }
-                                }
-                            }
+                            lerArq = File.ReadAllText(arqCompleto);
+                            Console.WriteLine($"\n{lerArq}\n");
+                            break;
                         }
-
-                        while (true)
+                        else
                         {
-                            Console.WriteLine("Deseja pesquisar outro diretorio? 1 ( Sim ) / 2 ( Nao )");
-                            decisaoFinal = int.Parse(Console.ReadLine());
-                            if (decisaoFinal == 1)
+                            Console.WriteLine("Arquivo nao existe.");
+                            while (true)
                             {
-                                break;
-                            }
-                            else
-                            {
-                                if (decisaoFinal == 2)
+                                Console.WriteLine("Deseja pesquisar o arquivo novamente? 1 ( Sim ) / 2 ( Nao )");
+                                var decisao = int.Parse(Console.ReadLine());
+                                if (decisao == 2)
                                 {
                                     Console.WriteLine("O programa foi encerrado...");
                                     return;
+                                }
+                                if (decisao == 1)
+                                {
+                                    break;
                                 }
                                 else
                                 {
@@ -105,11 +83,33 @@ namespace ProjetoEstagio
                             }
                         }
                     }
+
+                    while (true)
+                    {
+                        Console.WriteLine("Deseja pesquisar outro arquivo? 1 ( Sim ) / 2 ( Nao )");
+                        decisaoFinal = int.Parse(Console.ReadLine());
+                        if (decisaoFinal == 1)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if (decisaoFinal == 2)
+                            {
+                                Console.WriteLine("O programa foi encerrado...");
+                                return;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Opcao invalida.");
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"O programa deu um erro {e.Message}");
+                Console.WriteLine($"O programa deu um erro: {e.Message}");
             }
         }
     }
