@@ -12,8 +12,8 @@ namespace ProjetoEstagio
                 while (true)
                 {
                     string diretorio;
-                    string lerArq;
-                    int decisaoFinal;
+                    string arqQualquer;
+                    string arqCompleto;
 
                     while (true)
                     {
@@ -52,20 +52,27 @@ namespace ProjetoEstagio
                     while (true)
                     {
                         Console.WriteLine("Digite o nome do arquivo: ");
-                        var arqQualquer = Console.ReadLine();
-                        var arqCompleto = Path.Combine(diretorio, arqQualquer);
+                        arqQualquer = Console.ReadLine();
+                        arqCompleto = Path.Combine(diretorio, arqQualquer);
                         if (File.Exists(arqCompleto))
                         {
-                            lerArq = File.ReadAllText(arqCompleto);
-                            Console.WriteLine($"\n{lerArq}\n");
-                            break;
+                            using (StreamReader sr = new StreamReader(arqCompleto))
+                            {
+                                string lerArq = sr.ReadToEnd();
+                                string[] lerLinha = lerArq.Split("");
+                                foreach (string printaLinha in lerLinha)
+                                {
+                                    Console.Write($"{printaLinha}");
+                                }
+                                break;
+                            }
                         }
                         else
                         {
                             Console.WriteLine("Arquivo nao existe.");
                             while (true)
                             {
-                                Console.WriteLine("Deseja pesquisar o arquivo novamente? 1 ( Sim ) / 2 ( Nao )");
+                                Console.WriteLine("\nDeseja pesquisar o arquivo novamente? 1 ( Sim ) / 2 ( Nao )");
                                 var decisao = int.Parse(Console.ReadLine());
                                 if (decisao == 2)
                                 {
@@ -87,7 +94,7 @@ namespace ProjetoEstagio
                     while (true)
                     {
                         Console.WriteLine("Deseja pesquisar outro arquivo? 1 ( Sim ) / 2 ( Nao )");
-                        decisaoFinal = int.Parse(Console.ReadLine());
+                        int decisaoFinal = int.Parse(Console.ReadLine());
                         if (decisaoFinal == 1)
                         {
                             break;
