@@ -1,0 +1,118 @@
+using System;
+using System.IO;
+
+namespace ProjetoEstagio
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                while (true)
+                {
+                    string diretorio;
+                    string lerArq;
+                    int decisaoFinal;
+
+                    while (true)
+                    {
+                        Console.WriteLine("Digite o diretorio do arquivo: ");
+                        diretorio = Console.ReadLine();
+                        if (Directory.Exists(diretorio))
+                        {
+                            //Console.WriteLine("diretorio existe");
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Diretorio nao existe");
+                            while (true)
+                            {
+                                Console.WriteLine("Deseja pesquisar outro diretorio? 1 ( Sim ) / 2 ( Nao )");
+                                var decisao = int.Parse(Console.ReadLine());
+                                if (decisao == 2)
+                                {
+                                    Console.WriteLine("O programa foi encerrado...");
+                                    return;
+                                }
+                                if (decisao == 1)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opcao invalida.");
+                                }
+                            }
+                        }
+
+                        Console.WriteLine("Digite o nome do arquivo: ");
+                        var arqQualquer = Console.ReadLine();
+                        var arqCompleto = Path.Combine(diretorio, arqQualquer);
+                        lerArq = File.ReadAllText(arqCompleto);
+
+                        while (true)
+                        {
+                            if (File.Exists(arqCompleto))
+                            {
+                                Console.WriteLine($"\n{lerArq}\n");
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Arquivo nao existe.");
+                                while (true)
+                                {
+                                    Console.WriteLine("Deseja pesquisar outro arquivo? 1 ( Sim ) / 2 ( Nao )");
+                                    var decisao = int.Parse(Console.ReadLine());
+                                    if (decisao == 2)
+                                    {
+                                        Console.WriteLine("O programa foi encerrado...");
+                                        return;
+                                    }
+                                    if (decisao == 1)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Opcao invalida.");
+                                    }
+                                }
+                            }
+                        }
+
+                        while (true)
+                        {
+                            Console.WriteLine("Deseja pesquisar outro diretorio? 1 ( Sim ) / 2 ( Nao )");
+                            decisaoFinal = int.Parse(Console.ReadLine());
+                            if (decisaoFinal == 1)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                if (decisaoFinal == 2)
+                                {
+                                    Console.WriteLine("O programa foi encerrado...");
+                                    return;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Opcao invalida.");
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"O programa deu um erro {e.Message}");
+            }
+        }
+    }
+}
