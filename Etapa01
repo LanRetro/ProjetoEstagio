@@ -11,14 +11,18 @@ namespace ProjetoEstagio
             {
                 while (true)
                 {
+                    
                     string diretorio;
                     string arqQualquer;
                     string arqCompleto;
+                    string lerLinhaPorLinha;
 
                     while (true)
                     {
                         Console.WriteLine("Digite o diretorio do arquivo: ");
-                        diretorio = Console.ReadLine();
+                        //diretorio = Console.ReadLine(); -> usar mais tarde
+                        diretorio = (@"c:\New\cpo");
+                        Console.WriteLine(diretorio);
                         if (Directory.Exists(diretorio))
                         {
                             break;
@@ -52,19 +56,23 @@ namespace ProjetoEstagio
                     while (true)
                     {
                         Console.WriteLine("Digite o nome do arquivo: ");
-                        arqQualquer = Console.ReadLine();
+                        //arqQualquer = Console.ReadLine(); -> usar mais tarde
+                        arqQualquer = (@"ag_cmanp.CPO");
+                        Console.WriteLine(arqQualquer);
                         arqCompleto = Path.Combine(diretorio, arqQualquer);
                         if (File.Exists(arqCompleto))
                         {
                             using (StreamReader sr = new StreamReader(arqCompleto))
                             {
-                                string lerArq = sr.ReadToEnd();
-                                string[] lerLinha = lerArq.Split("");
-                                foreach (string printaLinha in lerLinha)
+                                while ((lerLinhaPorLinha = sr.ReadLine()) != null)
                                 {
-                                    Console.Write($"{printaLinha}");
+                                    if (lerLinhaPorLinha == "[INDICES]")
+                                    {
+                                       break;
+                                    }
+                                    string[] delimitador = lerLinhaPorLinha.Split(',');
+                                    Console.WriteLine($"nome do campo: {delimitador[0]} - tipo do campo: {delimitador[1]}");
                                 }
-                                break;
                             }
                         }
                         else
@@ -89,6 +97,7 @@ namespace ProjetoEstagio
                                 }
                             }
                         }
+                        break;
                     }
 
                     while (true)
