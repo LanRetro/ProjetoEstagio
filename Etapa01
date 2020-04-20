@@ -11,7 +11,7 @@ namespace ProjetoEstagio
             {
                 while (true)
                 {
-                    
+
                     string diretorio;
                     string arqQualquer;
                     string arqCompleto;
@@ -21,7 +21,7 @@ namespace ProjetoEstagio
                     {
                         Console.WriteLine("Digite o diretorio do arquivo: ");
                         //diretorio = Console.ReadLine(); -> usar mais tarde
-                        diretorio = (@"c:\New\cpo");
+                        diretorio = (@"c:\New");
                         Console.WriteLine(diretorio);
                         if (Directory.Exists(diretorio))
                         {
@@ -32,8 +32,6 @@ namespace ProjetoEstagio
                             Console.WriteLine("Diretorio nao existe");
                             while (true)
                             {
-
-
                                 Console.WriteLine("Deseja pesquisar outro diretorio? 1 ( Sim ) / 2 ( Nao )");
                                 var decisao = int.Parse(Console.ReadLine());
                                 if (decisao == 2)
@@ -52,26 +50,46 @@ namespace ProjetoEstagio
                             }
                         }
                     }
-
                     while (true)
                     {
                         Console.WriteLine("Digite o nome do arquivo: ");
                         //arqQualquer = Console.ReadLine(); -> usar mais tarde
-                        arqQualquer = (@"ag_cmanp.CPO");
+                        arqQualquer = (@"AG_CEST.CPO");
                         Console.WriteLine(arqQualquer);
                         arqCompleto = Path.Combine(diretorio, arqQualquer);
                         if (File.Exists(arqCompleto))
                         {
                             using (StreamReader sr = new StreamReader(arqCompleto))
                             {
+                                bool achouIndice = false;
+                                bool achouTitulo = false;
+                                bool jaImprimiu = false;
+
                                 while ((lerLinhaPorLinha = sr.ReadLine()) != null)
                                 {
-                                    if (lerLinhaPorLinha == "[INDICES]")
+                                    if (achouIndice == false)
                                     {
-                                       break;
+                                        achouIndice = lerLinhaPorLinha == "[INDICES]";
+                                        if (achouIndice == false)
+                                        {
+                                            string[] delimitador = lerLinhaPorLinha.Split(',');
+                                            Console.WriteLine($"nome do campo: {delimitador[0]} - tipo do campo: {delimitador[1]} - exemploPoicao3: {delimitador[2]}");
+                                            Console.WriteLine("------------------");
+
+                                        }
                                     }
-                                    string[] delimitador = lerLinhaPorLinha.Split(',');
-                                    Console.WriteLine($"nome do campo: {delimitador[0]} - tipo do campo: {delimitador[1]}");
+                                    else
+                                    {
+                                        if (achouTitulo == false)
+                                        {
+                                            achouTitulo = lerLinhaPorLinha == "[TITULO]";
+                                        }
+                                        if (achouTitulo && (jaImprimiu == false) && (lerLinhaPorLinha != "[TITULO]"))
+                                        {
+                                            Console.WriteLine(lerLinhaPorLinha);
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
